@@ -9,6 +9,7 @@ def loadData(filePath): # 读文件
             items = line.strip().split(",")
             data.append([int(items[i]) for i in range(len(items))])
     return np.asarray(data)  # 以np.ndarray类型数组返回
+
 class kdNode():
     # 分支结点
     def __init__(self, demo, value, left, right):
@@ -17,6 +18,7 @@ class kdNode():
         self.value = value
         self.left = left
         self.right = right
+        
 class kdtree():
     # kd树
     """

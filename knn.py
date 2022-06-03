@@ -98,19 +98,31 @@ def get_results(datafile:str, POI_id:int, k:int):
     t = RTree()
     # Create an RTree instance with some sample data
     t = RTree(max_entries=7)
+
+
+
     ids, pois = get_data(datafile)
     # ids中存储了所有POI的id编号，pois中以['地点名称', lat, lon]的形式存储了位置信息
     id2poi = dict(zip(ids, pois))
     # print(id2poi)
+    
+    
+    
     for i in range(config_0.index_cnt):
         t.insert(str(ids[i]), Rect(pois[i][1], pois[i][2], pois[i][1], pois[i][2]))
 
     level=t.get_levels()
+
+
     # query POI
     # p = tuple(id2poi[POI_id][1:])
     p=(31.103230943, 121.388255772)
+    
+    
     # build the priority queue of this query
     H = priority_queue.RtreenodeMinheap(p)
+      
+    
     # insert the root node
     H.insert(level[0][0])
 

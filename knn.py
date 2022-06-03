@@ -89,9 +89,10 @@ def k_NN_search(datafile, minheap, query_point, k):
     return s
 
 
-
 '''
-获取 Query
+kNN Search
+@param: file
+@return: res set
 '''
 def get_results(datafile:str, POI_id:int, k:int):
     t = RTree()

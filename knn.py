@@ -7,7 +7,7 @@ import time
 
 
 '''
-获取 POI
+@return: index, pois
 '''
 def get_data(filename: str):
     with open(filename, encoding='utf-8') as f:
@@ -18,7 +18,9 @@ def get_data(filename: str):
 
 
 '''
-获取 Query
+query obtains from file, which is the specific task for this homework.
+@param: filename
+@return: query
 '''
 def get_query(filename: str):
     with open(filename, encoding='utf-8') as f:
@@ -153,6 +155,8 @@ if __name__ == "__main__":
 
     querys = get_query(queryfile)
     
+
+    # res 
     results = []
     start_t = time.time()
     

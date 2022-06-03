@@ -2,8 +2,26 @@
 
 git status
 
-git add .
+read -r -p "是否继续提交? [Y/n] " input
 
-git commit -m $1
+case $input in
+    [yY][eE][sS]|[yY])
+        echo "继续提交"
+        git add -A
+        git commit -m $1
+        git push origin $2
+                    exit 1
+        ;;
 
-git push
+    [nN][oO]|[nN])
+        echo "中断提交"
+        exit 1
+            ;;
+
+    *)
+    echo "输入错误，请重新输入"
+    ;;
+esac
+
+
+

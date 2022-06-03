@@ -8,8 +8,8 @@ import time
 
 '''
 读取数据集: JSON -> list
-@param: filename
-@return: index, pois
+@param: filename        - 文件名
+@return: index, pois    - index 和 poi 集合
 '''
 def get_data(filename: str):
     with open(filename, encoding='utf-8') as f:
@@ -21,8 +21,8 @@ def get_data(filename: str):
 
 '''
 读取查询请求
-@param: filename
-@return: querys 
+@param: filename    - 文件名
+@return: querys     - 查询参数
 '''
 def get_query(filename: str):
     with open(filename, encoding='utf-8') as f:
@@ -33,7 +33,10 @@ def get_query(filename: str):
 
 
 '''
-
+根据 index 拿到 Point 实例
+@param: datafile              - 文件
+        idx                   - index，可根据 index 唯一标识一个 poi 记录
+@return: point                - 实例
 '''
 def get_point(datafile: str, idx: str):
     ids, pois = get_data(datafile)
@@ -93,23 +96,19 @@ def k_NN_search(datafile, minheap, query_point, k):
 
 
 '''
-kNN Search
-@param: file
-@return: res set
+拿到真正的结果
+@param: file        - 文件名
+@return: res set    - 结果集
 '''
 def get_results(datafile:str, POI_id:int, k:int):
     t = RTree()
     # Create an RTree instance with some sample data
     t = RTree(max_entries=7)
 
-
-
     ids, pois = get_data(datafile)
     # ids中存储了所有POI的id编号，pois中以['地点名称', lat, lon]的形式存储了位置信息
     id2poi = dict(zip(ids, pois))
     # print(id2poi)
-    
-    
     
     for i in range(config_0.index_cnt):
         t.insert(str(ids[i]), Rect(pois[i][1], pois[i][2], pois[i][1], pois[i][2]))
@@ -154,32 +153,34 @@ def save_file(ans:dict, filename:str):
 
 if __name__ == "__main__":
     
-    '''
-    读取数据
-    '''
+    # 数据路径
     datafile = "data/bundle0/dataset.json"
     queryfile = "data/bundle0/task1.json"
     POIresultfile = "result/bundle0/result1.json"
 
-
+    # 读取指定 query
     querys = get_query(queryfile)
-    
 
-    # res 
+    # 结果初始化
     results = []
+
+    # 执行时间记录
     start_t = time.time()
-    
+
+    # 顺序处理查询
     for i in range(len(querys)):
         results.append(get_results(datafile, querys[i][1], querys[i][0]))
-    
+
+    # 转换结果记录形式
     results_dict = {"results":results}
-    
+
+    # 记录时间指标
     end_t = time.time()
-    
+
+    # 保存结果文件
     print("The total time on processing {} is: {}s.".format(queryfile, end_t-start_t))
     # save_file(results_dict, POIresultfile)
  
     
-
 
 

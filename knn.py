@@ -5,6 +5,10 @@ import config_0
 visit_cnt = 0
 import time
 
+
+'''
+获取 POI
+'''
 def get_data(filename: str):
     with open(filename, encoding='utf-8') as f:
         all_data = json.load(f)
@@ -12,28 +16,51 @@ def get_data(filename: str):
     pois = all_data['data']
     return indexs, pois
 
+
+'''
+获取 Query
+'''
 def get_query(filename: str):
     with open(filename, encoding='utf-8') as f:
         all_data = json.load(f)
     querys = all_data['data']
     return querys
 
+
+
+'''
+获取 Query
+'''
 def get_point(datafile: str, idx: str):
     ids, pois = get_data(datafile)
     id2poi = dict(zip(ids, pois))
     point = tuple(id2poi[idx][1:])
     return point
 
+
+'''
+获取 Query
+@return: 
+'''
 def get_range(filename: str):
     with open(filename, encoding='utf-8') as f:
         all_data = json.load(f)
     ranges = all_data['range']
     return ranges
 
+
+'''
+@param: point1, point2 
+@return: dist
+'''
 def euclidean_dis(p1:tuple, p2:tuple):
     return (p1[0]-p2[0])**2 + (p1[1]-p2[1])**2
 
 
+
+'''
+获取 Query
+'''
 def k_NN_search(datafile, minheap, query_point, k):
     """
     Parameters:
@@ -61,6 +88,11 @@ def k_NN_search(datafile, minheap, query_point, k):
                 s.add(out.data)
     return s
 
+
+
+'''
+获取 Query
+'''
 def get_results(datafile:str, POI_id:int, k:int):
     t = RTree()
     # Create an RTree instance with some sample data
@@ -97,16 +129,27 @@ def save_file(ans:dict, filename:str):
 
 
 if __name__ == "__main__":
+    
+    '''
+    读取数据
+    '''
     datafile = "data/bundle0/dataset.json"
     queryfile = "data/bundle0/task1.json"
     POIresultfile = "result/bundle0/result1.json"
+
+
     querys = get_query(queryfile)
+    
     results = []
     start_t = time.time()
+    
     for i in range(len(querys)):
         results.append(get_results(datafile, querys[i][1], querys[i][0]))
+    
     results_dict = {"results":results}
+    
     end_t = time.time()
+    
     print("The total time on processing {} is: {}s.".format(queryfile, end_t-start_t))
     # save_file(results_dict, POIresultfile)
  

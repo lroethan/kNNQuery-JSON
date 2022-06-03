@@ -7,6 +7,8 @@ import time
 
 
 '''
+读取数据集: JSON -> list
+@param: filename
 @return: index, pois
 '''
 def get_data(filename: str):
@@ -18,9 +20,9 @@ def get_data(filename: str):
 
 
 '''
-query obtains from file, which is the specific task for this homework.
+读取查询请求
 @param: filename
-@return: query
+@return: querys 
 '''
 def get_query(filename: str):
     with open(filename, encoding='utf-8') as f:
@@ -31,7 +33,7 @@ def get_query(filename: str):
 
 
 '''
-获取 Query
+
 '''
 def get_point(datafile: str, idx: str):
     ids, pois = get_data(datafile)
@@ -40,18 +42,19 @@ def get_point(datafile: str, idx: str):
     return point
 
 
-'''
-获取 Query
-@return: 
-'''
-def get_range(filename: str):
-    with open(filename, encoding='utf-8') as f:
-        all_data = json.load(f)
-    ranges = all_data['range']
-    return ranges
+# '''
+# 获取 Query
+# @return: 
+# '''
+# def get_range(filename: str):
+#     with open(filename, encoding='utf-8') as f:
+#         all_data = json.load(f)
+#     ranges = all_data['range']
+#     return ranges
 
 
 '''
+计算欧式距离
 @param: point1, point2 
 @return: dist
 '''
@@ -61,22 +64,20 @@ def euclidean_dis(p1:tuple, p2:tuple):
 
 
 '''
-获取 Query
+kNN 查询处理
+@param: datafile,       - 文件
+        minheap,        - 小顶堆实例
+        query_point,    - 经纬度
+        k               - 结果集基数
+@return: s              - 结果集（R-Tree 索引项）
 '''
 def k_NN_search(datafile, minheap, query_point, k):
-    """
-    Parameters:
-        minheap: the instance of heap
-        query_point: query_point(x,y)
-        k: desire number of group size
-    Return: a set of RTreeEntry
-    """
-    s=set()
+    s = set()
     min_dis = 0
     tmp = query_point
     global visit_cnt
-    while len(s)<k and not minheap.is_empty():
-        out=minheap.delete()
+    while len(s) < k and not minheap.is_empty():
+        out = minheap.delete()
         visit_cnt += 1
         if isinstance(out,rtree.RTreeEntry):
             s.add(out.data)
@@ -137,6 +138,14 @@ def get_results(datafile:str, POI_id:int, k:int):
     print("The number of visits to the node is: {}".format(visit_cnt))
     return list(result)
 
+
+
+'''
+保存结果文件
+@param: ans,     - Query 结果
+        filename - 文件名
+@return: 
+'''
 def save_file(ans:dict, filename:str):
     json_str = json.dumps(ans, indent=4)
     with open(filename, 'w') as json_file:

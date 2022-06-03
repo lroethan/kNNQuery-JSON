@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab916334-88ed-4ceb-bfb4-b68fbf3fcb3b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/read_data_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/20215227010-冯春惠.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/20215227010-冯春惠.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myGitPush.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knn.py" beforeDir="false" afterPath="$PROJECT_DIR$/knn.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +36,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Shell Script.myGitPush.sh">
     <configuration name="read_data_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="20215227010-冯春惠" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -61,8 +59,24 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="myGitPush.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/myGitPush.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Shell Script.myGitPush.sh" />
         <item itemvalue="Python.read_data_test" />
       </list>
     </recent_temporary>
@@ -75,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1646100206164</updated>
-      <workItem from="1654255915784" duration="3020000" />
+      <workItem from="1654255915784" duration="4198000" />
     </task>
     <servers />
   </component>

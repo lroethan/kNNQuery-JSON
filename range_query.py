@@ -34,15 +34,31 @@ def euclidean_dis(p1:tuple, p2:tuple):
     return (p1[0]-p2[0])**2 + (p1[1]-p2[1])**2
 
 
+def build_index(index, pois):
+
+    t = RTree()
+
+    for i in range(index):
+        pass
+
+
+
+
+
+
 def range_query(datafile, minheap, query_rect):
     """
-    Parameters:
-        minheap: the instance of heap
-        query_rect: (left_up, right_down)
-    Return: a set of RTreeEntry
+    :param minheap: the instance of heap
+    :param query_rect: query_rect: (left_up, right_down)
+    :return:  a set of RTreeEntry
     """
-    
+    s = set()
 
+
+
+
+
+    
 
 
 def k_NN_search(datafile, minheap, query_point, k):

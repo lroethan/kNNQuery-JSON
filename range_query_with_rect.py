@@ -1,4 +1,4 @@
-from rtreelib import RTree, Rect, rtree, Point
+from rtreelib import RTree, Rect, rtree, Point, RTreeGuttman
 import priority_queue
 import json
 import config_0
@@ -19,8 +19,8 @@ def get_query(filename: str):
     """
     with open(filename, encoding='utf-8') as f:
         o_query = json.load(f)
-    querys = o_query['data']
-    return querys
+    query_set = o_query['data']
+    return query_set
 
 
 def build_index(filename: str):
@@ -51,34 +51,49 @@ def build_index(filename: str):
     return t
 
 
-def query_processing(filename, t):
-    querys = get_query(filename)
-    for i in range(len(querys)):
-        pass
+def query_processing(filename, r_tree):
 
+    query_set = get_query(filename)
+
+    for i in range(len(query_set)):
+
+        res_dict = {}   # prepare for final result json.
+        result = [] # poi_name list
+
+        query_processing_time_s = time.time() * 1000
+
+        # nodes = r_tree.query_nodes(Rect(0, 0, 180, 180)) #  test
+        nodes = r_tree.query_nodes(Rect(query_set[i][0], query_set[i][1],
+                                query_set[i][2], query_set[i][3]))
+        # print(query_set[i][0], query_set[i][1],
+        #                         query_set[i][2], query_set[i][3])
+
+        query_processing_time_e = time.time() * 1000
+        query_time = query_processing_time_e - query_processing_time_s
+
+        res_dict['task_id'] = i + 1
+        res_dict['query_time'] = query_time
+
+        for j in nodes:
+            for k in j.entries:
+                # print(oindex2poi.get(k.data).get_name())
+                result.append(oindex2poi.get(k.data).get_name())
+
+        res_dict['result'] = result
+
+        with open("result/bundle0/range_query" + str(i + 1) + ".json", 'w', encoding='utf-8') as fp:
+            json.dump(res_dict, fp)
 
 
 if __name__ == "__main__":
     data_file = "data/bundle0/dataset.json"
-    query_file = "data/bundle0/task1.json"
-    result_file = "result/bundle0/result1.json"
+    query_file = "data/bundle0/task2.json" # range query requirement.
 
+    # Indexing only once.
     index_build_time_s = time.time()
     t = build_index(data_file)
     index_build_time_e = time.time()
 
+    query_processing(query_file, t)
 
 
-    query_processing_time_s = time.time()
-
-    # for i in entries:
-    #     print(i.data)
-
-    # nodes = t.query_nodes(Rect(user_query[0], user_query[1], user_query[2], user_query[3]))
-    nodes = t.query_nodes(Rect(30.0, 120.0, 32.0, 122.0))
-    for i in nodes:
-        for j in i.entries:
-            print(oindex2poi.get(j.data).get_name())
-    # entries = t.query(Rect(0,0,180,180))
-
-    query_processing_time_e = time.time()

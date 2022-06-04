@@ -12,5 +12,14 @@ indexs = all_data['index']
 pois = all_data['data']
 
 # print(indexs)
-print(pois)
+# print(pois)
+
+
+
+for i in range(len(pois)):
+    if pois[i][1] > 31.26669374323893 and pois[i][2] > 121.53663879013597 and pois[i][1] < 32.277351826123098 and  pois[i][2] < 121.54823912361209:
+        print(pois[i])
+
+
+
 

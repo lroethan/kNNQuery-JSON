@@ -29,7 +29,9 @@ def build_index(filename: str):
     # 构建 R-Tree
     t = RTree()
     for i in oindex2poi.keys():
-        t.insert(i, Rect(oindex2poi[i].get_lat(), oindex2poi[i].get_lon(),
+        # print(i)
+        # print(oindex2poi[i].get_lat())
+        t.insert(str(i), Rect(oindex2poi[i].get_lat(), oindex2poi[i].get_lon(),
                          oindex2poi[i].get_lat(), oindex2poi[i].get_lon()))
 
     return t
@@ -40,8 +42,20 @@ if __name__ == "__main__":
     query_file = "data/bundle0/task1.json"
     result_file = "result/bundle0/result1.json"
 
+    index_build_time_s = time.time()
     t = build_index(data_file)
 
-    entries = t.query(Rect(config_0.xmin, config_0.ymin, config_0.xmax, config_0.ymax))
+    index_build_time_e = time.time()
+    query_processing_time_s = time.time()
+    entries = t.query(Rect(0,0,180,180))
 
-    print(entries)
+
+    for i in entries:
+        print(i.rect)
+        # print(i.data)
+
+
+
+    query_processing_time_e = time.time()
+
+    # print(entries)

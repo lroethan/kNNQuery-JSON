@@ -1,40 +1,61 @@
-from rtreelib import RTree, Rect, rtree
+from rtreelib import RTree, Rect, rtree, Point
 import priority_queue
 import json
 import config_0
 import time
+import sys
 
 from Poi import Poi
+
+# K-V dict which maintained in memory, to obtain the final name or useful information.
+oindex2poi = {}
+
+
+def get_query(filename: str):
+    """
+    Read query JSON and return the query rectangle.
+    :param filename: task2.json
+    :return: querys: list
+    """
+    with open(filename, encoding='utf-8') as f:
+        o_query = json.load(f)
+    querys = o_query['data']
+    return querys
 
 
 def build_index(filename: str):
     """
-    对静态数据集构建索引
-    :param filename: 文件路径
-    :return t: R-Tree
+    Build indexes on static datasets
+    :param filename: dataset.json
+    :return t: R-Tree on dataset.json
     """
 
-    # 读取数据集
+    # 1. Data source
     with open(filename, encoding='utf-8') as f:
         o_data = json.load(f)
     o_index = o_data['index']
     o_poi = o_data['data']
 
-    # 构建 KV 字典
-    oindex2poi = {}  # key 为 o_index（数据集里的 index），value 为 Poi 实例，暂定为三/四元组。
+    # 2. Transform data. example: '107' : '107, 苏州大学, 30, 120'. The dict is global.
     for i in range(len(o_index)):
         oindex2poi[o_index[i]] = Poi(o_index[i],
                                      o_poi[i][0], o_poi[i][1], o_poi[i][2])
 
-    # 构建 R-Tree
+    # 3. Build R-tree by sequentially inserting KEY and Rect.
     t = RTree()
     for i in oindex2poi.keys():
-        # print(i)
-        # print(oindex2poi[i].get_lat())
-        t.insert(str(i), Rect(oindex2poi[i].get_lat(), oindex2poi[i].get_lon(),
+        t.insert(i, Rect(oindex2poi[i].get_lat(), oindex2poi[i].get_lon(),
                          oindex2poi[i].get_lat(), oindex2poi[i].get_lon()))
 
+    # 4. Return R-tree. The R-tree is used for all search processing, i.e, one fits all.
     return t
+
+
+def query_processing(filename, t):
+    querys = get_query(filename)
+    for i in range(len(querys)):
+        pass
+
 
 
 if __name__ == "__main__":
@@ -44,18 +65,20 @@ if __name__ == "__main__":
 
     index_build_time_s = time.time()
     t = build_index(data_file)
-
     index_build_time_e = time.time()
+
+
+
     query_processing_time_s = time.time()
-    entries = t.query(Rect(0,0,180,180))
 
+    # for i in entries:
+    #     print(i.data)
 
-    for i in entries:
-        print(i.rect)
-        # print(i.data)
-
-
+    # nodes = t.query_nodes(Rect(user_query[0], user_query[1], user_query[2], user_query[3]))
+    nodes = t.query_nodes(Rect(30.0, 120.0, 32.0, 122.0))
+    for i in nodes:
+        for j in i.entries:
+            print(oindex2poi.get(j.data).get_name())
+    # entries = t.query(Rect(0,0,180,180))
 
     query_processing_time_e = time.time()
-
-    # print(entries)

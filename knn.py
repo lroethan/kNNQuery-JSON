@@ -76,8 +76,6 @@ kNN 查询处理
         k                               - 结果集基数
 @return: s                              - 结果集（R-Tree 索引项）
 '''
-
-
 def k_NN_search(datafile, minheap, query_point, k):
     s = set()
     min_dis = 0

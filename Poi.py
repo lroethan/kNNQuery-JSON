@@ -16,8 +16,7 @@ class Poi:
         输出样例 [1] 苏州大学（37.7，121.1）
         :return:
         """
-        return "[" + self.index + "] " + self.name \
-               + "（" + self.lat + "，" + self.lon + "）"
+        return "[" + str(self.index) + "] " + str(self.name) + "（" + str(self.lat) + "，" + str(self.lon) + "）"
 
     def get_lat(self):
         return self.lat

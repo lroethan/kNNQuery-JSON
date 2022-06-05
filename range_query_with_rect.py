@@ -52,7 +52,11 @@ def build_index(filename: str):
 
 
 def query_processing(filename, r_tree):
-
+    """
+    Sequentially process the given query set.
+    :param filename: task2.json
+    :param r_tree: on static data
+    """
     query_set = get_query(filename)
 
     for i in range(len(query_set)):
@@ -62,9 +66,9 @@ def query_processing(filename, r_tree):
 
         query_processing_time_s = time.time() * 1000
 
-        # nodes = r_tree.query_nodes(Rect(0, 0, 180, 180)) #  test
-        nodes = r_tree.query_nodes(Rect(query_set[i][0], query_set[i][1],
-                                query_set[i][2], query_set[i][3]))
+        nodes = r_tree.query_nodes(Rect(0, 0, 180, 180)) #  test
+        # nodes = r_tree.query_nodes(Rect(query_set[i][0], query_set[i][1],
+        #                         query_set[i][2], query_set[i][3]))
         # print(query_set[i][0], query_set[i][1],
         #                         query_set[i][2], query_set[i][3])
 
@@ -76,8 +80,8 @@ def query_processing(filename, r_tree):
 
         for j in nodes:
             for k in j.entries:
-                # print(oindex2poi.get(k.data).get_name())
-                result.append(oindex2poi.get(k.data).get_name())
+                print(oindex2poi.get(k.data).to_string())
+                result.append(oindex2poi.get(k.data).to_string())
 
         res_dict['result'] = result
 

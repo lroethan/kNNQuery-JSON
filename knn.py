@@ -173,7 +173,7 @@ if __name__ == "__main__":
 
     # 顺序处理查询
     for i in range(len(querys)):
-        results.append(get_results(datafile, querys[i][1], querys[i][0]))
+        results.append(get_results(datafile, querys[i][1], querys[i][0])) # 纬 经？？
 
     # 转换结果记录形式
     results_dict = {"results": results}
